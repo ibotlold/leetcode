@@ -6,6 +6,7 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
+        //numbers of random generated values
         int n = 10;
         Random rnd = new Random();
         int[] array = new int[n];
@@ -20,7 +21,7 @@ public class Main {
 
 class QuickSort {
     static int[] sort(int[] array) {
-//        hoare(array, 0, array.length - 1);
+        hoare(array, 0, array.length - 1);
         return array;
     }
 
