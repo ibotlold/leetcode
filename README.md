@@ -1,4 +1,4 @@
-### My leetcode profile [lold](https://leetcode.com/lold/).
+### My leetcode profile [lold](https://leetcode.com/lold/)
 
 |Difficult|Solved |
 |---------|------:|
