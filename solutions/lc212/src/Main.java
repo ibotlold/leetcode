@@ -52,58 +52,53 @@ public class Main {
  */
 
 class Solution {
-    Set<String> result = new HashSet<>();
-    Set<String> wordsSet = new HashSet<>();
-    boolean wordFound = false;
+    HashSet<String> result = new HashSet<>();
     public List<String> findWords(char[][] board, String[] words) {
-        int height = board.length;
-        int width = board[0].length;
-        wordsSet.addAll(Arrays.asList(words));
+        Trie trie = new Trie();
         for (String word :
                 words) {
-            this.wordFound = !wordsSet.contains(word);
-            for (int i = 0; i < height && !this.wordFound; i++) {
-                for (int j = 0; j < width && !this.wordFound; j++) {
-                    char charFromWord = word.charAt(0);
-                    char charFromBoard = board[i][j];
-                    if (charFromWord != charFromBoard) continue;
+            trie.insert(word);
+        }
+        int height = board.length;
+        int width = board[0].length;
+        for (String word :
+                words) {
+            for (int i = 0; i < height && !result.contains(word); i++) {
+                for (int j = 0; j < width && !result.contains(word); j++) {
                     int[] root = new int[]{i, j};
-                    int[][] path = new int[][]{ {i , j} };
-                    backtrack(board, word, path, root);
+                    int[][] path = new int[][]{ root };
+                    backtrack(board, word, trie, path, root);
                 }
             }
         }
         return new ArrayList<>(result);
     }
 
-    private void backtrack(char[][] board, String word, int[][] path, int[] cell) {
-        char[] charArray = new char[path.length];
+    private void backtrack(char[][] board, String word, Trie trie, int[][] path, int[] cell) {
+        char[] charFromPath = new char[path.length];
         for (int i = 0; i < path.length; i++) {
-            charArray[i] = board[path[i][0]][path[i][1]];
+            charFromPath[i] = board[path[i][0]][path[i][1]];
+            if (charFromPath[i] != word.charAt(i)) return;
         }
-        if (wordsSet.contains(String.valueOf(charArray))) {
+        Trie.Node node = trie.getNode(charFromPath);
+        if (node == null) return;
+        if (node.value != null && node.value.equals(word)) {
             result.add(word);
-            wordsSet.remove(word);
-        }
-        if (path.length == word.length()) {
             return;
         }
         int[][] neighbours = getNeighbours(board, cell);
         if (neighbours == null) return;
-        for (int i = 0; i < neighbours.length; i++) {
-            int[] nextCell = new int[]{neighbours[i][0], neighbours[i][1]};
+        for (int k = 0; k < neighbours.length && !result.contains(word); k++) {
+            int[] nextCell = new int[]{neighbours[k][0], neighbours[k][1]};
             boolean visited = false;
-            for (int k = 0; k < path.length; k++) {
-                if (!Arrays.equals(path[k], nextCell)) continue;
+            for (int i = 0; i < path.length; i++) {
+                if (!Arrays.equals(path[i], nextCell)) continue;
                 visited = true;
                 break;
             }
             if (visited) continue;
-            char charFromWord = word.charAt(path.length);
-            char charFromNextCell = board[nextCell[0]][nextCell[1]];
-            if (charFromWord != charFromNextCell) continue;
             int[][] newPath = pushCell(path, nextCell);
-            backtrack(board, word, newPath, nextCell);
+            backtrack(board, word, trie, newPath, nextCell);
         }
     }
 
@@ -155,4 +150,38 @@ class Solution {
         }
         return neighbours;
     }
+
+    class Trie {
+        class Node {
+            HashMap<Character,Node> childNodes = new HashMap<>();
+            String value;
+        }
+        private Node root = new Node();
+
+        public boolean insert(String value) {
+            Node current = root;
+            for (int i = 0; i < value.length(); i++) {
+                char ch = value.charAt(i);
+                current = current.childNodes.computeIfAbsent(ch, character -> new Node());
+            }
+            current.value = value;
+            return true;
+        }
+        private Node search(char[] charSequence) {
+            Node current = root;
+            for (int i = 0; i < charSequence.length; i++) {
+                char ch = charSequence[i];
+                Node node = current.childNodes.get(ch);
+                if (node == null) return null;
+                current = node;
+            }
+            return current;
+        }
+        public Node getNode(char[] charSequence) {
+            Node node = search(charSequence);
+            return node;
+        }
+    }
+
+
 }
