@@ -9,3 +9,6 @@
 
 ### Quicksort
 [Wiki article](https://en.wikipedia.org/wiki/Quicksort) | [Implementation](quicksort/src/Main.java)
+
+### Trie
+[Wiki article](https://en.wikipedia.org/wiki/Trie) | [Implementation](solutions/lc212/src/)
