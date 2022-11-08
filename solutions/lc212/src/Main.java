@@ -52,7 +52,7 @@ public class Main {
  */
 
 class Solution {
-    HashSet<String> result = new HashSet<>();
+    final HashSet<String> result = new HashSet<>();
     public List<String> findWords(char[][] board, String[] words) {
         Trie trie = new Trie();
         for (String word :
@@ -149,9 +149,9 @@ class Solution {
         return neighbours;
     }
 
-    class Trie {
+    static class Trie {
         class Node {
-            HashMap<Character,Node> childNodes = new HashMap<>();
+            final HashMap<Character,Node> childNodes = new HashMap<>();
             String value;
         }
         private final Node root = new Node();
