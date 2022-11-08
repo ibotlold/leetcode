@@ -196,8 +196,7 @@ class Solution {
             return current;
         }
         public Node getNode(char[] charSequence) {
-            Node node = search(charSequence);
-            return node;
+            return search(charSequence);
         }
     }
 
