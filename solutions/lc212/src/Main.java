@@ -84,6 +84,7 @@ class Solution {
         if (node == null) return;
         if (node.value != null && node.value.equals(word)) {
             result.add(word);
+            trie.remove(word);
             return;
         }
         int[][] neighbours = getNeighbours(board, cell);
@@ -166,6 +167,26 @@ class Solution {
             }
             current.value = value;
             return true;
+        }
+        public void remove(String word) {
+            Node root = this.root;
+            trieDelete(root, new StringBuilder(word));
+        }
+        private Node trieDelete(Node current, StringBuilder key) {
+            Node next = null;
+            char firstChar = 0;
+            if (!key.isEmpty()) {
+                firstChar = key.charAt(0);
+                next = current.childNodes.get(key.charAt(0));
+                next = trieDelete(next, key.deleteCharAt(0));
+            }
+            if (next == null) {
+                if (firstChar == 0) {
+                    current.value = null;
+                } else current.childNodes.remove(firstChar);
+                if (current.childNodes.isEmpty() && current.value == null) return null;
+            }
+            return current;
         }
         private Node search(char[] charSequence) {
             Node current = root;
