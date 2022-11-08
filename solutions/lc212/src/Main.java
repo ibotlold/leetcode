@@ -145,7 +145,6 @@ class Solution {
         //down
         if (i != rowCount - 1) {
             neighbours[neighboursCounter] = new int[]{i + 1, j};
-            neighboursCounter++;
         }
         return neighbours;
     }
