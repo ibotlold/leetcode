@@ -92,8 +92,8 @@ class Solution {
         for (int k = 0; k < neighbours.length && !result.contains(word); k++) {
             int[] nextCell = new int[]{neighbours[k][0], neighbours[k][1]};
             boolean visited = false;
-            for (int i = 0; i < path.length; i++) {
-                if (!Arrays.equals(path[i], nextCell)) continue;
+            for (int[] ints : path) {
+                if (!Arrays.equals(ints, nextCell)) continue;
                 visited = true;
                 break;
             }
@@ -187,8 +187,7 @@ class Solution {
         }
         private Node search(char[] charSequence) {
             Node current = root;
-            for (int i = 0; i < charSequence.length; i++) {
-                char ch = charSequence[i];
+            for (char ch : charSequence) {
                 Node node = current.childNodes.get(ch);
                 if (node == null) return null;
                 current = node;
