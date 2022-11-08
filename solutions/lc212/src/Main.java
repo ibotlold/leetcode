@@ -154,7 +154,7 @@ class Solution {
             HashMap<Character,Node> childNodes = new HashMap<>();
             String value;
         }
-        private Node root = new Node();
+        private final Node root = new Node();
 
         public boolean insert(String value) {
             Node current = root;
