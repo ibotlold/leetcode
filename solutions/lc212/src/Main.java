@@ -105,9 +105,7 @@ class Solution {
 
     private int[][] pushCell(int[][] path, int[] nextCell) {
         int[][] newPath = new int[path.length + 1][2];
-        for (int i = 0; i < path.length; i++) {
-            newPath[i] = path[i];
-        }
+        System.arraycopy(path, 0, newPath, 0, path.length);
         newPath[path.length] = nextCell;
         return newPath;
     }
