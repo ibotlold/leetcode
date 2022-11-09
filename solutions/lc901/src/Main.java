@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.ArrayDeque;
 
 public class Main {
     public static void main(String[] args) {
@@ -15,20 +14,21 @@ public class Main {
 }
 
 class StockSpanner {
-    ArrayList<Integer> history = new ArrayList<>();
+    final ArrayDeque<Node> stack = new ArrayDeque<>();
+
+    record Node(int price, int count) { }
+
     public StockSpanner() {
 
     }
 
     public int next(int price) {
-        int lastIndex = history.size();
-        history.add(price);
-        int counter = 0;
-        for (int i = lastIndex; i >= 0; i--) {
-            if (price >= history.get(i)) counter++;
-            else return counter;
+        int count = 1;
+        while (!stack.isEmpty() && stack.peek().price <= price) {
+            count += stack.pop().count;
         }
-        return counter;
+        stack.push(new Node(price, count));
+        return count;
     }
 }
 
