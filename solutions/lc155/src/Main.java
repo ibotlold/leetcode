@@ -1,10 +1,4 @@
 import java.util.ArrayDeque;
-import java.util.NoSuchElementException;
-
-public class Main {
-    public static void main() {
-    }
-}
 
 class MinStack {
 
@@ -16,14 +10,13 @@ class MinStack {
 
     public void push(int val) {
         int minVal;
-        try {
-            var node = queue.getFirst();
-            minVal = node.minValue;
-        } catch (NoSuchElementException e) {
+        if (queue.isEmpty()) {
             minVal = val;
-        }
-        if (minVal > val) {
-            minVal = val;
+        } else {
+            minVal = queue.getFirst().minValue;
+            if (minVal > val) {
+                minVal = val;
+            }
         }
         Node newNode = new Node(val, minVal);
         queue.addFirst(newNode);
