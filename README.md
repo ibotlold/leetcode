@@ -2,10 +2,10 @@
 
 |Difficult| Solved  |
 |---------|--------:|
-|Easy     |   10+1  |
-|Medium   |   13    |
-|Hard     |    6+2  |
-|Total    |   29+3  |
+|Easy     |   11    |
+|Medium   |   13+1  |
+|Hard     |    8    |
+|Total    |   33+1  |
 
 ### Quicksort
 [Wiki article](https://en.wikipedia.org/wiki/Quicksort) | [Implementation](quicksort/src/Main.java)
