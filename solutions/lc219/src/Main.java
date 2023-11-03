@@ -1,4 +1,6 @@
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
@@ -10,16 +12,14 @@ public class Main {
 
 class Solution {
     public boolean containsNearbyDuplicate(int[] nums, int k) {
-        if (k == 1) {
-            for (int i = 1; i < nums.length; i++) {
-                if (nums[i] == nums[i - 1]) return true;
+        HashSet<Integer> window = new HashSet<>(k + 1);
+        for (int i = 0; i < nums.length; i++) {
+            if (window.contains(nums[i])) {
+                return true;
             }
-        } else {
-            HashMap<Integer, Integer> map = new HashMap<>();
-            for (int i = 0; i < nums.length; i++) {
-                int number = nums[i];
-                if (map.containsKey(number) && i - map.get(number) <= k) return true;
-                map.put(number, i);
+            window.add(nums[i]);
+            if (window.size() > k) {
+                window.remove(nums[i - k]);
             }
         }
         return false;
