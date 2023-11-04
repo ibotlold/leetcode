@@ -2,10 +2,10 @@
 
 |Difficult| Solved | Last Week |
 |---------|-------:|----------:|
-|Easy     |   12   |     +1    |
-|Medium   |   16   |     +2    |
-|Hard     |    8   |           |
-|Total    |   37   |     +3    |
+|Easy     |   15   |           |
+|Medium   |   20   |     +2    |
+|Hard     |    7   |           |
+|Total    |   42   |     +2    |
 
 ### Quicksort
 [Wiki article](https://en.wikipedia.org/wiki/Quicksort) | [Implementation](quicksort/src/Main.java)
