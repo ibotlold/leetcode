@@ -4,30 +4,17 @@ package main
 // https://leetcode.com/problems/longest-common-prefix/
 
 func longestCommonPrefix(strs []string) string {
-	var cursor = 0
-	var first string = strs[0]
 	var prefix string
-	if len(first) < 1 {
-		return prefix
-	}
-	list := strs[1:]
-	for i := 0; i < len(first); i++ {
-		isMatch := true
-		for _, v := range list {
-			if cursor >= len(v) {
-				isMatch = false
-				break
-			}
-			isMatch = first[cursor] == v[cursor]
-			if !isMatch {
-				break
+	for i := 0; i < len(strs[0]); i++ {
+		ch := strs[0][i]
+
+		for j := 1; j < len(strs); j++ {
+			if i >= len(strs[j]) || strs[j][i] != ch {
+				return prefix
 			}
 		}
-		if !isMatch {
-			break
-		}
-		cursor = i + 1
+		prefix += string(ch)
 	}
 
-	return first[0:cursor]
+	return prefix
 }
