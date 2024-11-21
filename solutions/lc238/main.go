@@ -6,21 +6,18 @@ package main
 func productExceptSelf(nums []int) []int {
 	n := len(nums)
 	answer := make([]int, n)
-	postfix := make([]int, n)
 	answer[0] = 1
-	postfix[n-1] = 1
+	answer[n-1] = 1
 
-	prefixProduct := 1
-	postfixProduct := 1
+	roll := 1
 	for i := 1; i < n; i++ {
-		prefixProduct *= nums[i-1]
-		postfixProduct *= nums[n-i]
-		answer[i] = prefixProduct
-		postfix[n-i-1] = postfixProduct
+		roll *= nums[i-1]
+		answer[i] = roll
 	}
-	for i := 0; i < n; i++ {
-		answer[i] = answer[i] * postfix[i]
+	roll = 1
+	for i := n - 2; i >= 0; i-- {
+		roll *= nums[i+1]
+		answer[i] *= roll
 	}
-
 	return answer
 }
