@@ -1,44 +1,30 @@
 package main
 
-import "slices"
+import (
+	"sort"
+)
 
 // 56. Merge Intervals
 // https://leetcode.com/problems/merge-intervals/
 
 func merge(intervals [][]int) [][]int {
-	slices.SortFunc(intervals, func(a []int, b []int) int {
-		first := a[0]
-		second := b[0]
-		var result int
-		if first > second {
-			result = 1
-		} else if first < second {
-			result = -1
-		}
-		return result
+	sort.Slice(intervals, func(a int, b int) bool {
+		return intervals[a][0] < intervals[b][0]
 	})
 	var result [][]int
-	handledSet := make(map[int]struct{})
-	for k, interval := range intervals {
-		if _, ok := handledSet[k]; ok {
-			continue
+	start, end := intervals[0][0], intervals[0][1]
+	result = append(result, []int{start, end})
+
+	for i := 1; i < len(intervals); i++ {
+		currStart, currEnd := intervals[i][0], intervals[i][1]
+
+		if currStart <= end {
+			end = max(end, currEnd)
+			result[len(result)-1][1] = end
+		} else {
+			start, end = currStart, currEnd
+			result = append(result, []int{start, end})
 		}
-		start := interval[0]
-		end := interval[1]
-		for i := k + 1; i < len(intervals); i++ {
-			if _, ok := handledSet[i]; ok {
-				continue
-			}
-			current := intervals[i]
-			isOverlap := current[0] <= end && current[1] >= start
-			if isOverlap {
-				start = min(start, current[0])
-				end = max(end, current[1])
-				handledSet[i] = struct{}{}
-			}
-		}
-		result = append(result, []int{start, end})
-		handledSet[k] = struct{}{}
 	}
 
 	return result
