@@ -12,53 +12,29 @@ func spiralOrder(matrix [][]int) []int {
 		result[resultCursor] = num
 		resultCursor++
 	}
-
-	left, top, right, bottom := 0, 0, colCount-1, rowCount-1
-	x, y := 0, 0
-	i, j := 1, 0
-	goalX, goalY := right, 0
-	for {
-		collect(matrix[y][x])
-		if x == goalX && y == goalY {
-			i, j = nextDirection(i, j)
-			if i != 0 && left >= right {
-				break
-			}
-			if i == 1 {
-				goalX = right
-				left++
-			} else if i == -1 {
-				goalX = left
-				right--
-			}
-			if j != 0 && top >= bottom {
-				break
-			}
-			if j == 1 {
-				goalY = bottom
-				top++
-			} else if j == -1 {
-				goalY = top
-				bottom--
-			}
+	top, right, bottom, left := 0, colCount-1, rowCount-1, 0
+	for left <= right && top <= bottom {
+		for i := left; i <= right; i++ {
+			collect(matrix[top][i])
 		}
-
-		x += i
-		y += j
+		top++
+		for i := top; i <= bottom; i++ {
+			collect(matrix[i][right])
+		}
+		right--
+		if top <= bottom {
+			for i := right; i >= left; i-- {
+				collect(matrix[bottom][i])
+			}
+			bottom--
+		}
+		if left <= right {
+			for i := bottom; i >= top; i-- {
+				collect(matrix[i][left])
+			}
+			left++
+		}
 	}
 
 	return result
-}
-
-func nextDirection(i int, j int) (int, int) {
-	if i == 1 && j == 0 {
-		return 0, 1
-	}
-	if i == 0 && j == 1 {
-		return -1, 0
-	}
-	if i == -1 && j == 0 {
-		return 0, -1
-	}
-	return 1, 0
 }
