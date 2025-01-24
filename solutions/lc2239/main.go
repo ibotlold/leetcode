@@ -5,17 +5,14 @@ package main
 
 func findClosestNumber(nums []int) int {
 	answer := nums[0]
-	for _, v := range nums {
-		candidate := v
-		if abs(answer) > abs(candidate) {
-			answer = candidate
-		} else if abs(answer) == abs(candidate) {
-			if candidate > answer {
-				answer = candidate
-			}
+	for i := 1; i < len(nums); i++ {
+		current := nums[i]
+		if abs(current) < abs(answer) {
+			answer = current
+		} else if abs(answer) == abs(current) && current > answer {
+			answer = current
 		}
 	}
-
 	return answer
 }
 
