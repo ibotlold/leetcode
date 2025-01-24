@@ -1,24 +1,24 @@
 package main
 
+import "strings"
+
 // 1768. Merge Strings Alternately
 // https://leetcode.com/problems/merge-strings-alternately/description/
 
 func mergeAlternately(word1 string, word2 string) string {
-	lenSum := len(word1) + len(word2)
-	result := make([]byte, lenSum)
-	var first, second, current int
-	for current != lenSum {
-		if first < len(word1) {
-			result[current] = word1[first]
-			current++
-			first++
+	var buf strings.Builder
+
+	var cursor int
+	end := max(len(word1), len(word2))
+	for cursor < end {
+		if cursor < len(word1) {
+			buf.WriteByte(word1[cursor])
 		}
-		if second < len(word2) {
-			result[current] = word2[second]
-			current++
-			second++
+		if cursor < len(word2) {
+			buf.WriteByte(word2[cursor])
 		}
+		cursor++
 	}
 
-	return string(result)
+	return buf.String()
 }
