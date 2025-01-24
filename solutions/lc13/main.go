@@ -1,27 +1,26 @@
 package main
 
-import "slices"
-
 // 13. Roman to Integer
 // https://leetcode.com/problems/roman-to-integer
 
 func romanToInt(s string) int {
-	var backward = slices.Backward([]byte(s))
-	var prev, sum int
-	for _, v := range backward {
-		val := letter(v)
-		if prev > val {
-			sum -= val
-		} else {
-			sum += val
+	var sum, maxLast int
+	for i := len(s) - 1; i >= 0; i-- {
+		num := charToInt(s[i])
+		if maxLast < num {
+			maxLast = num
 		}
-		prev = val
+		if num < maxLast {
+			sum -= num
+		} else {
+			sum += num
+		}
 	}
 
 	return sum
 }
 
-func letter(b byte) int {
+func charToInt(b byte) int {
 	switch b {
 	case 'I':
 		return 1
@@ -38,5 +37,6 @@ func letter(b byte) int {
 	case 'M':
 		return 1000
 	}
-	return 0
+
+	panic("No case")
 }
