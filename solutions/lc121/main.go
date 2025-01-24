@@ -1,16 +1,19 @@
 package main
 
+import "math"
+
 // 121. Best Time to Buy and Sell Stock
 // https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
 
 func maxProfit(prices []int) int {
-	var sum int
-	minVal := prices[0]
-	for i := 1; i < len(prices); i++ {
-		if prices[i] < minVal {
-			minVal = prices[i]
+	var profit int
+	minVal := math.MaxInt
+	for _, price := range prices {
+		if price < minVal {
+			minVal = price
 		}
-		sum = max(sum, prices[i]-minVal)
+		profit = max(profit, price-minVal)
 	}
-	return sum
+
+	return profit
 }
