@@ -4,37 +4,43 @@ package main
 // https://leetcode.com/problems/spiral-matrix/
 
 func spiralOrder(matrix [][]int) []int {
-	rowCount := len(matrix)
-	colCount := len(matrix[0])
-	result := make([]int, rowCount*colCount)
-	var resultCursor int
-	collect := func(num int) {
-		result[resultCursor] = num
-		resultCursor++
-	}
-	top, right, bottom, left := 0, colCount-1, rowCount-1, 0
-	for left <= right && top <= bottom {
-		for i := left; i <= right; i++ {
-			collect(matrix[top][i])
+	ans := make([]int, 0, len(matrix)*len(matrix[0]))
+
+	n, m := len(matrix), len(matrix[0])
+	top, right, bottom, left := 0, m, n, 0
+	for {
+		var tick bool
+		if top < bottom {
+			for i := left; i < right; i++ {
+				tick = true
+				ans = append(ans, matrix[top][i])
+			}
+			top++
 		}
-		top++
-		for i := top; i <= bottom; i++ {
-			collect(matrix[i][right])
+		if left < right {
+			for i := top; i < bottom; i++ {
+				tick = true
+				ans = append(ans, matrix[i][right-1])
+			}
+			right--
 		}
-		right--
-		if top <= bottom {
-			for i := right; i >= left; i-- {
-				collect(matrix[bottom][i])
+		if top < bottom {
+			for i := right - 1; i >= left; i-- {
+				tick = true
+				ans = append(ans, matrix[bottom-1][i])
 			}
 			bottom--
 		}
-		if left <= right {
-			for i := bottom; i >= top; i-- {
-				collect(matrix[i][left])
+		if left < right {
+			for i := bottom - 1; i >= top; i-- {
+				tick = true
+				ans = append(ans, matrix[i][left])
 			}
 			left++
 		}
+		if !tick {
+			break
+		}
 	}
-
-	return result
+	return ans
 }
