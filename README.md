@@ -5,10 +5,10 @@
 ### Go
 |Difficult| Solved | Last Week |
 |---------|-------:|----------:|
-|Easy     |   12   |    +12    |
+|Easy     |   13   |    +13    |
 |Medium   |    4   |     +4    |
 |Hard     |    0   |           |
-|Total    |   16   |    +16    |
+|Total    |   17   |    +17    |
 
 ### Java
 [Java branch](https://github.com/ibotlold/leetcode/tree/java)
