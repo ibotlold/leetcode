@@ -2,28 +2,34 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 )
 
 // 228. Summary Ranges
 // https://leetcode.com/problems/summary-ranges/
 
 func summaryRanges(nums []int) []string {
-	var result []string
-	for start := 0; start < len(nums); start++ {
-		end := start
-		for i := start + 1; i < len(nums); i++ {
-			if nums[i]-nums[i-1] != 1 {
+	ans := make([]string, 0, len(nums))
+	for i := 0; i < len(nums); i++ {
+		start := i
+		end := i
+		current := nums[i]
+		for j := i + 1; j < len(nums); j++ {
+			last := nums[j-1]
+			next := nums[j]
+			delta := next - last
+			if delta > 1 {
 				break
 			}
-			end = i
+			end = j
 		}
-		if start == end {
-			result = append(result, fmt.Sprintf("%d", nums[start]))
+		count := end - start
+		if count == 0 {
+			ans = append(ans, strconv.Itoa(current))
 		} else {
-			result = append(result, fmt.Sprintf("%d->%d", nums[start], nums[end]))
+			ans = append(ans, fmt.Sprintf("%d->%d", current, nums[end]))
 		}
-		start = end
+		i = end
 	}
-
-	return result
+	return ans
 }
