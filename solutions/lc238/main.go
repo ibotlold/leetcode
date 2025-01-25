@@ -4,20 +4,44 @@ package main
 // https://leetcode.com/problems/product-of-array-except-self/
 
 func productExceptSelf(nums []int) []int {
-	n := len(nums)
-	answer := make([]int, n)
-	answer[0] = 1
-	answer[n-1] = 1
+	ans := make([]int, len(nums))
 
-	roll := 1
-	for i := 1; i < n; i++ {
-		roll *= nums[i-1]
-		answer[i] = roll
+	var zeroCount int
+
+	for _, v := range nums {
+		if v == 0 {
+			zeroCount++
+		}
 	}
-	roll = 1
-	for i := n - 2; i >= 0; i-- {
-		roll *= nums[i+1]
-		answer[i] *= roll
+
+	prod := 1
+	if zeroCount > 1 {
+		return ans
+	} else if zeroCount == 1 {
+		idx := -1
+		for i, v := range nums {
+			if v == 0 {
+				idx = i
+			} else {
+				prod *= v
+			}
+		}
+		ans[idx] = prod
+		return ans
 	}
-	return answer
+
+	for i := 0; i < len(ans); i++ {
+		ans[i] = 1
+	}
+
+	for i := 1; i < len(nums); i++ {
+		prod *= nums[i-1]
+		ans[i] = prod
+	}
+	prod = 1
+	for i := len(nums) - 2; i >= 0; i-- {
+		prod *= nums[i+1]
+		ans[i] = ans[i] * prod
+	}
+	return ans
 }
