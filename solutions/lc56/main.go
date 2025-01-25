@@ -1,31 +1,38 @@
 package main
 
 import (
-	"sort"
+	"cmp"
+	"slices"
 )
 
 // 56. Merge Intervals
 // https://leetcode.com/problems/merge-intervals/
 
 func merge(intervals [][]int) [][]int {
-	sort.Slice(intervals, func(a int, b int) bool {
-		return intervals[a][0] < intervals[b][0]
+	ans := make([][]int, 0, len(intervals))
+	slices.SortFunc(intervals, func(a, b []int) int {
+		return cmp.Compare(a[0], b[0])
 	})
-	var result [][]int
-	start, end := intervals[0][0], intervals[0][1]
-	result = append(result, []int{start, end})
 
-	for i := 1; i < len(intervals); i++ {
-		currStart, currEnd := intervals[i][0], intervals[i][1]
-
-		if currStart <= end {
-			end = max(end, currEnd)
-			result[len(result)-1][1] = end
-		} else {
-			start, end = currStart, currEnd
-			result = append(result, []int{start, end})
+	for i := 0; i < len(intervals); i++ {
+		start, end := bounds(intervals[i])
+		next := i
+		for j := i + 1; j < len(intervals); j++ {
+			nextStart, nextEnd := bounds(intervals[j])
+			if nextStart <= end { // ??
+				end = max(nextEnd, end)
+				next = j
+			} else {
+				break
+			}
 		}
+		ans = append(ans, []int{start, end})
+		i = next
 	}
 
-	return result
+	return ans
+}
+
+func bounds(interval []int) (start int, end int) {
+	return interval[0], interval[1]
 }
