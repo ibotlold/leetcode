@@ -7,8 +7,8 @@
 |---------|-------:|----------:|
 |Easy     |   17   |    +17    |
 |Medium   |   10   |    +10    |
-|Hard     |    0   |           |
-|Total    |   27   |    +27    |
+|Hard     |    1   |     +1    |
+|Total    |   28   |    +28    |
 
 ### Java
 [Java branch](https://github.com/ibotlold/leetcode/tree/java)
