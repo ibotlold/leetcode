@@ -6,9 +6,9 @@
 |Difficult| Solved | Last Week |
 |---------|-------:|----------:|
 |Easy     |   28   |     +6    |
-|Medium   |   19   |     +6    |
+|Medium   |   20   |     +7    |
 |Hard     |    1   |           |
-|Total    |   48   |    +12    |
+|Total    |   49   |    +13    |
 
 ### Java
 [Java branch](https://github.com/ibotlold/leetcode/tree/java)
