@@ -18,29 +18,12 @@ type TreeNode struct {
  * }
  */
 func maxDepth(root *TreeNode) int {
-	var depth int
-	var queue []*TreeNode
 	if root == nil {
-		return depth
+		return 0
 	}
-	queue = append(queue, root)
 
-	for len(queue) > 0 {
-		var childs []*TreeNode
-		for _, elem := range queue {
-			if elem == nil {
-				continue
-			}
-			if elem.Left != nil {
-				childs = append(childs, elem.Left)
-			}
-			if elem.Right != nil {
-				childs = append(childs, elem.Right)
-			}
-		}
+	left := maxDepth(root.Left)
+	right := maxDepth(root.Right)
 
-		depth++
-		queue = childs
-	}
-	return depth
+	return 1 + max(left, right)
 }
