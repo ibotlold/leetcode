@@ -18,25 +18,22 @@ type TreeNode struct {
  * }
  */
 func invertTree(root *TreeNode) *TreeNode {
-	if root == nil {
-		return nil
-	}
-	var stack []*TreeNode
-	stack = append(stack, root)
-	for len(stack) > 0 {
-		node := stack[len(stack)-1]
-		stack = stack[:len(stack)-1]
+	var queue []*TreeNode
+	queue = append(queue, root)
 
-		s := node.Left
-		node.Left = node.Right
-		node.Right = s
+	for len(queue) > 0 {
+		elem := queue[len(queue)-1]
+		queue = queue[:len(queue)-1]
 
-		if node.Left != nil {
-			stack = append(stack, node.Left)
+		if elem == nil {
+			continue
 		}
-		if node.Right != nil {
-			stack = append(stack, node.Right)
-		}
+
+		hand := elem.Left
+		elem.Left = elem.Right
+		elem.Right = hand
+
+		queue = append(queue, elem.Left, elem.Right)
 	}
 
 	return root
